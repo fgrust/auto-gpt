@@ -11,7 +11,8 @@ pub fn get_user_response(question: &str) -> String {
 
     // Print the question in a specific color
     stdout.execute(SetForegroundColor(Color::Blue)).unwrap();
-    println!("");
+
+    println!();
     println!("{}", question);
 
     // Reset Color

@@ -7,6 +7,7 @@ use std::env;
 use reqwest::header::{HeaderMap, HeaderValue};
 
 // Call large Language Model (i.e. GPT-4)
+#[allow(dead_code)]
 pub async fn call_gpt(messages: Vec<Message>) {
     dotenv().ok();
 
