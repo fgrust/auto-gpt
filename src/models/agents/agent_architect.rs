@@ -113,7 +113,6 @@ impl SpecialFunctions for AgentSolutionArchitect {
                         // Perform URL Test
                         match check_status_code(&client, url).await {
                             Ok(status_code) => {
-                                dbg!(status_code);
                                 if status_code != 200 {
                                     exclude_urls.push(url.clone())
                                 }
