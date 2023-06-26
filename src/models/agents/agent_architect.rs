@@ -31,17 +31,15 @@ impl AgentSolutionArchitect {
 
     // Retrieve Project Scope
     async fn call_project_scope(&mut self, factsheet: &mut FactSheet) -> ProjectScope {
-        let msg_context = format!("{}", factsheet.project_description);
-
         let ai_response: ProjectScope = ai_task_request_decoded::<ProjectScope>(
-            msg_context,
+            factsheet.project_description.to_string(),
             &self.attributes.position,
             get_function_string!(print_project_scope),
             print_project_scope,
         )
         .await;
 
-        factsheet.project_scope = Some(ai_response.clone());
+        factsheet.project_scope = Some(ai_response);
         self.attributes.update_state(AgentState::Finished);
         ai_response
     }
@@ -125,13 +123,13 @@ impl SpecialFunctions for AgentSolutionArchitect {
                     }
 
                     // Exclude any faulty urls
-                    if exclude_urls.len() > 0 {
+                    if !exclude_urls.is_empty() {
                         let new_urls: Vec<String> = factsheet
                             .external_urls
                             .as_ref()
                             .unwrap()
                             .iter()
-                            .filter(|url| !exclude_urls.contains(&url))
+                            .filter(|url| !exclude_urls.contains(url))
                             .cloned()
                             .collect();
 
