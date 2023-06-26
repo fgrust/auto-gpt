@@ -5,6 +5,12 @@ use super::command_line::PrintCommand;
 use crate::apis::call_request::call_gpt;
 use crate::models::general::llm::Message;
 
+use std::fs;
+
+const CODE_TEMPLATE_PATH: &str = "/home/fzgem18/work/rust/web-template/src/code_template.rs";
+const EXEC_MAIN_PATH: &str = "/home/fzgem18/work/rust/web-template/src/main.rs";
+const API_SCHEMA_PATH: &str = "/home/fzgem18/work/rust/auto_gpt/schemas/api_schema.json";
+
 // Extend ai function to encourage specific output
 #[allow(dead_code)]
 pub fn extend_ai_function(ai_func: fn(&str) -> &'static str, func_input: &str) -> Message {
@@ -74,6 +80,27 @@ pub async fn ai_task_request_decoded<T: DeserializeOwned>(
 pub async fn check_status_code(client: &Client, url: &str) -> Result<u16, reqwest::Error> {
     let response = client.get(url).send().await?;
     Ok(response.status().as_u16())
+}
+
+// Get Code Template
+#[allow(dead_code)]
+pub fn read_code_template_contents() -> String {
+    let path = String::from(CODE_TEMPLATE_PATH);
+    fs::read_to_string(path).expect("Failed to read code template")
+}
+
+// Save New Backend code
+#[allow(dead_code)]
+pub fn save_backend_code(contents: &String) {
+    let path = String::from(EXEC_MAIN_PATH);
+    fs::write(path, contents).expect("Failed to write main.rs file");
+}
+
+// Save JSON API Endpoint schema
+#[allow(dead_code)]
+pub fn save_api_endpoints(api_endpoints: &String) {
+    let path = String::from(API_SCHEMA_PATH);
+    fs::write(path, api_endpoints).expect("Failed to write API Endpoints to file");
 }
 
 #[cfg(test)]
