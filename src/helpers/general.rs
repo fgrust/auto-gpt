@@ -89,6 +89,13 @@ pub fn read_code_template_contents() -> String {
     fs::read_to_string(path).expect("Failed to read code template")
 }
 
+// Get Exec Main Code
+#[allow(dead_code)]
+pub fn read_exec_main_contents() -> String {
+    let path = String::from(EXEC_MAIN_PATH);
+    fs::read_to_string(path).expect("Failed to read exec main code")
+}
+
 // Save New Backend code
 #[allow(dead_code)]
 pub fn save_backend_code(contents: &String) {

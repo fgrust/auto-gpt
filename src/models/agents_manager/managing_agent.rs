@@ -81,7 +81,7 @@ mod tests {
 
     #[tokio::test]
     async fn tests_managing_agent() {
-        let usr_request: &str = "need a full stack app that fetches and tracks my fitness progress. Needs to include timezone info from the web.";
+        let usr_request: &str = "need a full stack app that fetches and tracks my fitness progress. Needs to include timezone information.";
 
         let mut managing_agent = ManagingAgent::new(usr_request.to_string())
             .await
